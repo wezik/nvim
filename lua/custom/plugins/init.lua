@@ -9,19 +9,7 @@ return {
   -- Git integration in nvim
   'tpope/vim-fugitive',
 
-  -- Supermaven integration
-  -- TODO: Swap it with something maintained and allowing vendor swapping
-  {
-    'supermaven-inc/supermaven-nvim',
-    config = function()
-      require('supermaven-nvim').setup {
-        keymaps = {
-          accept_word = '<C-Tab>',
-          accept_suggestion = '<C-j>',
-        },
-      }
-    end,
-  },
+  require 'custom.plugins.minuet',
 
   -- Harpoon, for quick file navigation
   {
