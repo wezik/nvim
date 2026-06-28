@@ -13,6 +13,8 @@ vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 -- Neotree override
 vim.keymap.set('n', '<leader>te', '<cmd>Neotree reveal<CR>')
 
+vim.keymap.set('n', '<leader>tw', '<cmd>set wrap!<CR>', { desc = '[T]oggle [W]rap' })
+
 -- Harpoon
 local harpoon = require 'harpoon'
 
