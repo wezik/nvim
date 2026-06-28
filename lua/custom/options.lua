@@ -3,6 +3,9 @@ vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.wrap = false
 
+-- Single status line for all visible buffers
+vim.o.laststatus = 3
+
 -- Auto folding
 vim.o.foldmethod = 'expr'
 vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
