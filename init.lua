@@ -90,26 +90,6 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Custom keymaps
--- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
--- Nicer tab handling in visual mode
-vim.keymap.set('v', '<', '<gv')
-vim.keymap.set('v', '>', '>gv')
-
--- Nicer movement in visual mode
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
-
--- Additional map for neotree
-vim.keymap.set('n', '<leader>te', '<cmd>Neotree reveal<CR>')
-
-vim.o.expandtab = true
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
-
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
@@ -272,6 +252,7 @@ require('lazy').setup({
     event = 'BufRead',
     config = function()
       require('guess-indent').setup {}
+      vim.cmd 'silent! GuessIndent'
     end,
   },
 
@@ -1115,30 +1096,11 @@ require('lazy').setup({
   },
 })
 
--- set up folds for treesitter
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+require('custom.keymaps')
+require('custom.options')
+require('custom.lsp')
 
--- keep folds open by default
-vim.o.foldlevel = 99
-vim.o.foldenable = true
-
--- winbar setup
 require('custom.winbar').setup()
 vim.o.winbar = "%{%v:lua.require('custom.winbar').setup()%}"
--- actually just copy the highlight from mini.statusline to match
 vim.api.nvim_set_hl(0, 'WinBar', { link = 'MiniStatuslineFilename' })
 vim.api.nvim_set_hl(0, 'WinBarNC', { link = 'MiniStatuslineInactive' })
-
--- enable zip plugin for jvm based lsp's
-vim.g.loaded_zipPlugin = nil
-
--- kotlin-lsp override before lspconfig patches it
-vim.lsp.config('kotlin_lsp', {
-  cmd = { "intellij-server", "--stdio" },
-  filetypes = { "kotlin" },
-  root_markers = { "settings.gradle", "settings.gradle.kts", "build.gradle", "build.gradle.kts" },
-})
-vim.lsp.enable('kotlin_lsp')
-
-vim.o.wrap=false
